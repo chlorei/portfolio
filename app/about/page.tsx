@@ -37,7 +37,7 @@ export default function About() {
             <div className="w-full max-w-sm aspect-square rounded-lg border border-[#1F1F1F] bg-[#141414] overflow-hidden shadow-lg">
               <Image
                 src="/myPhoto.png"
-                alt="Aleksandr Alekseev - Developer Photo"
+                alt="Aleksandr Alekseev Developer Photo"
                 width={400}
                 height={400}
                 className="w-full h-full object-cover"
