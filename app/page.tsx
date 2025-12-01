@@ -60,7 +60,7 @@ export default function Home() {
           <div className="flex items-center justify-center lg:justify-end order-first lg:order-last">
             <div className="w-full max-w-sm aspect-square rounded-lg border border-border bg-card overflow-hidden shadow-premium">
               <Image
-                src="/professional-developer-portrait.png"
+                src="/myPhoto.png"
                 alt="Developer Photo Placeholder"
                 width={400}
                 height={400}
@@ -76,11 +76,11 @@ export default function Home() {
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-border">
         <div className="grid grid-cols-3 gap-8 sm:gap-12">
           <div className="space-y-2">
-            <p className="text-2xl sm:text-3xl font-bold text-primary">5+</p>
+            <p className="text-2xl sm:text-3xl font-bold text-primary">2+</p>
             <p className="text-sm text-muted-foreground">Years Experience</p>
           </div>
           <div className="space-y-2">
-            <p className="text-2xl sm:text-3xl font-bold text-primary">20+</p>
+            <p className="text-2xl sm:text-3xl font-bold text-primary">10+</p>
             <p className="text-sm text-muted-foreground">Projects Built</p>
           </div>
           <div className="space-y-2">

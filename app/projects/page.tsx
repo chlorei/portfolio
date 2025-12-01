@@ -19,28 +19,28 @@ export default function Projects() {
       title: "Relinxr",
       description:
         "A comprehensive SaaS link analytics platform enabling users to track, analyze, and optimize their URLs with real-time analytics and detailed insights.",
-      tech: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "API"],
-      github: "https://github.com",
-      demo: "https://relinxr.example.com",
-      image: "/analytics-dashboard.png",
+      tech: ["Next.js", "TypeScript", "Tailwind CSS", "MongoDB", "React", "React Bits", "Shadcn UI", "JWT", "Recharts"],
+      github: "https://github.com/chlorei/https---github.com-chlorei-linklab",
+      demo: "https://rld.bio",
+      image: "/relinxr.png",
     },
     {
-      title: "pokerocheck.ru",
+      title: "Pokerocheck",
       description:
         "Migration of a legacy React SPA to a modern Next.js SSR application, dramatically improving performance, SEO, and user experience with server-side rendering.",
-      tech: ["Next.js", "React", "TypeScript", "SSR", "Performance"],
+      tech: ["Next.js", "React", "TypeScript", "Styled Components",],
       github: "https://github.com",
       demo: "https://pokerocheck.ru",
-      image: "/modern-web-application.png",
+      image: "/pokerocheck.png",
     },
     {
       title: "d1lemma",
       description:
         "A sophisticated task management application featuring an integrated rich-text editor, real-time collaboration, and intuitive task organization with markdown support.",
-      tech: ["React", "Node.js", "WebSockets", "Rich Text Editor", "MongoDB"],
+      tech: ["React", "Node.js", "Redux"],
       github: "https://github.com",
       demo: "https://d1lemma.example.com",
-      image: "/task-manager-app.png",
+      image: "/dilemma.png",
     },
   ]
 
@@ -65,6 +65,7 @@ export default function Projects() {
                 {project.image && (
                   <div className="lg:col-span-1 h-64 lg:h-auto overflow-hidden bg-muted">
                     <Image
+                      loading="eager"
                       src={project.image || "/placeholder.svg"}
                       alt={project.title}
                       width={500}

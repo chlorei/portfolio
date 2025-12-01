@@ -6,19 +6,19 @@ export default function About() {
   const skillGroups = [
     {
       category: "Frontend",
-      skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vue.js", "Figma"],
+      skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Figma", "Redux", "Material UI"],
     },
     {
       category: "Backend",
-      skills: ["Node.js", "PostgreSQL", "MongoDB", "REST APIs", "GraphQL", "WebSockets"],
+      skills: ["Node.js", "Next.js Route Handlers / API", "MongoDB", "REST APIs", "JWT Auth"],
     },
     {
       category: "DevOps & Tools",
-      skills: ["Docker", "Git", "GitHub", "CI/CD", "AWS", "Vercel"],
+      skills: ["Git", "GitHub", "CI/CD"],
     },
     {
       category: "Design & UX",
-      skills: ["UI Design", "Component Architecture", "Accessibility", "Performance", "Mobile-First", "Animation"],
+      skills: ["UI Design", "Component Architecture", "Accessibility", "Performance optimization", "Mobile-First"],
     },
   ]
 
@@ -36,7 +36,7 @@ export default function About() {
           <div className="flex items-start justify-center lg:col-span-1">
             <div className="w-full max-w-sm aspect-square rounded-lg border border-[#1F1F1F] bg-[#141414] overflow-hidden shadow-lg">
               <Image
-                src="/professional-developer-portrait.png"
+                src="/myPhoto.png"
                 alt="Aleksandr Alekseev - Developer Photo"
                 width={400}
                 height={400}
