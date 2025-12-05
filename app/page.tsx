@@ -7,8 +7,8 @@ import Image from "next/image"
 export default function Home() {
   const handleDownloadCV = () => {
     const link = document.createElement("a")
-    link.href = "/cv/aleksandr-alekseev-cv.pdf"
-    link.download = "Aleksandr-Alekseev-CV.pdf"
+    link.href = "/CV.pdf"
+    link.download = "CV.pdf"
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)

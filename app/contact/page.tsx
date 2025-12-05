@@ -12,16 +12,39 @@ export default function Contact() {
     email: "",
     message: "",
   })
-  const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitted, setSubmitted] = useState(false)
+  const [isSending, setIsSending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    setSubmitted(true)
-    setTimeout(() => {
+    setError(null)
+    setIsSending(true)
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+
+      if (!res.ok) {
+        throw new Error("Failed to send")
+      }
+
+      setSubmitted(true)
       setFormData({ name: "", email: "", message: "" })
-      setSubmitted(false)
-    }, 2000)
+
+      setTimeout(() => {
+        setSubmitted(false)
+      }, 2500)
+    } catch (err) {
+      console.error(err)
+      setError("Something went wrong. Please try again.")
+    } finally {
+      setIsSending(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -104,10 +127,11 @@ export default function Contact() {
               className="bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto"
               disabled={submitted}
             >
-              {submitted ? "Sent!" : "Send Message"}
+              {isSending ? "Sending..." : submitted ? "Sent!" : "Send Message"}
             </Button>
-            <Link href="/resume.pdf">
+            <Link href="/CV.pdf">
               <Button
+
                 variant="outline"
                 className="w-full sm:w-auto border-border text-foreground hover:bg-muted/50 bg-transparent"
               >
