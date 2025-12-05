@@ -30,9 +30,9 @@ export default function Contact() {
   }
 
   const socialLinks = [
-    { label: "GitHub", href: "https://github.com", icon: "↗" },
-    { label: "LinkedIn", href: "https://linkedin.com", icon: "↗" },
-    { label: "Email", href: "mailto:alex@example.com", icon: "↗" },
+    { label: "GitHub", href: "https://github.com/chlorei", icon: "↗" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/aleksandr-alekseev-715326346/", icon: "↗" },
+    { label: "Email", href: "mailto:@example.com", icon: "↗" },
   ]
 
   return (
@@ -143,8 +143,8 @@ export default function Contact() {
           <div className="space-y-3 pt-4">
             <p className="text-sm text-muted-foreground">
               Or email me directly at{" "}
-              <Link href="mailto:alex@example.com" className="text-primary hover:underline">
-                alex@example.com
+              <Link href="mailto:aaalekseevhi@gmail.com" className="text-primary hover:underline">
+                aaalekseevhi@gmail.com
               </Link>
             </p>
           </div>
