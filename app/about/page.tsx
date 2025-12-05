@@ -108,7 +108,7 @@ export default function About() {
   ]
 
   return (
-    <main className="min-h-screen bg-background pt-32">
+    <main className="min-h-screen bg-background pt-10">
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         {/* Header */}
         <div className="space-y-2 mb-12">

@@ -59,8 +59,8 @@ export default function Contact() {
   ]
 
   return (
-    <main className="min-h-screen bg-background pt-32">
-      <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+    <main className="min-h-screen bg-background pt-10">
+      <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-120 lg:py-20">
         {/* Header */}
         <div className="space-y-2 mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">Contact</h1>
