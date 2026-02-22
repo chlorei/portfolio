@@ -183,7 +183,26 @@ export default function About() {
             </div>
           </div>
         </div>
+                 {/* Skills Section */}
+        <div className="border-t border-[#1F1F1F] pt-16">
+          <h2 className="text-2xl font-bold mb-12">Skills & Expertise</h2>
 
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {skillGroups.map((group, index) => (
+              <div key={index} className="space-y-4">
+                <h3 className="text-sm font-semibold uppercase tracking-wide text-[#B6F2C1]">{group.category}</h3>
+                <ul className="space-y-2">
+                  {group.skills.map((skill, i) => (
+                    <li key={i} className="text-sm text-[#A1A1A1] hover:text-[#FFFFFF] transition-colors duration-200">
+                      {skill}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+        
         <div className="border-t border-[#1F1F1F] pt-16 mb-16">
           <h2 className="text-2xl font-bold mb-12">Education & Experience</h2>
 
@@ -294,25 +313,7 @@ export default function About() {
 
 
 
-        {/* Skills Section */}
-        <div className="border-t border-[#1F1F1F] pt-16">
-          <h2 className="text-2xl font-bold mb-12">Skills & Expertise</h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {skillGroups.map((group, index) => (
-              <div key={index} className="space-y-4">
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-[#B6F2C1]">{group.category}</h3>
-                <ul className="space-y-2">
-                  {group.skills.map((skill, i) => (
-                    <li key={i} className="text-sm text-[#A1A1A1] hover:text-[#FFFFFF] transition-colors duration-200">
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
+       
       </section>
     </main>
   )
