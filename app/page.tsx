@@ -42,7 +42,7 @@ export default function Home() {
               <Link href="/contact" className="w-full sm:w-auto">
                 <Button
                   variant="outline"
-                  className="w-full border-border text-foreground hover:bg-muted/50 rounded-lg h-11 px-6 bg-transparent font-medium"
+                  className="w-full border-border text-foreground hover:white rounded-lg h-11 px-6 bg-transparent font-medium"
                 >
                   Contact Me
                 </Button>
