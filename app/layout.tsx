@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import FloatingNav from "@/components/floating-nav"
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   },
 }
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,7 +31,8 @@ export default function RootLayout({
         <FloatingNav />
         {children}
         <Analytics />
+        <GoogleAnalytics gaId="G-CCJSCZ30GY" />
       </body>
     </html>
   )
-}
+} 
