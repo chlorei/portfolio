@@ -25,10 +25,9 @@ export default function Home() {
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-balance-pretty">
                 Aleksandr Alekseev
               </h1>
-              <p className="text-lg sm:text-xl text-muted-foreground font-medium">Full-Stack Software Engineer</p>
+              <p className="text-lg sm:text-xl text-muted-foreground font-medium">Computer Science Student & Full-Stack Developer</p>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-xl">
-                Crafting high-performance, accessible web experiences with elegant code. Specializing in modern React,
-                Next.js, and full-stack architecture.
+                Currently studying at TUHH and looking for a Werkstudent position to bring value and grow as a developer.
               </p>
             </div>
 
@@ -74,20 +73,17 @@ export default function Home() {
 
       {/* Stats Section */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-border">
-        <div className="grid grid-cols-3 gap-8 sm:gap-12">
-          <div className="space-y-2">
-            <p className="text-2xl sm:text-3xl font-bold text-primary">2+</p>
-            <p className="text-sm text-muted-foreground">Years Experience</p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-2xl sm:text-3xl font-bold text-primary">10+</p>
-            <p className="text-sm text-muted-foreground">Projects Built</p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-2xl sm:text-3xl font-bold text-primary">100%</p>
-            <p className="text-sm text-muted-foreground">Client Satisfaction</p>
-          </div>
-        </div>
+       <div className="grid grid-cols-2 gap-8 sm:gap-12"> {/* Сделал 2 колонки, так как у тебя 2 элемента */}
+  <div className="space-y-2">
+    <p className="text-2xl sm:text-3xl font-bold text-primary">3+</p>
+    <p className="text-sm text-muted-foreground">Years of Freelance Experience</p>
+  </div>
+  <div className="space-y-2">
+    <p className="text-2xl sm:text-3xl font-bold text-primary">5+</p>
+    <p className="text-sm text-muted-foreground">Commercial Projects Contributed/Built</p> 
+    {/* Contributed означает, что ты внес свой вклад (верстал, делал фичи), а не делал всё один */}
+  </div>
+</div>
       </section>
     </main>
   )
