@@ -10,11 +10,11 @@ export default function About() {
     },
     {
       category: "Backend",
-      skills: ["Node.js", "Next.js Route Handlers / API", "MongoDB", "REST APIs", "JWT Auth"],
+      skills: ["Node.js", "Next.js Route Handlers / API", "MongoDB", "REST APIs"],
     },
     {
       category: "DevOps & Tools",
-      skills: ["Git", "GitHub", "CI/CD"],
+      skills: ["Git"],
     },
     {
       category: "Design & UX",
@@ -33,13 +33,7 @@ export default function About() {
       degree: "Preparatory Technical Track",
       period: "2024–2025",
       description: "Intensive preparation in mathematics, physics, computer science, and engineering fundamentals.",
-    },
-    {
-      institution: "Lyceum No. 3, Irkutsk",
-      degree: "Advanced Secondary Education",
-      period: "2012–2024",
-      description: "Specialized curriculum with emphasis on mathematics and natural sciences.",
-    },
+    }
   ]
 
   const experience = [
@@ -273,13 +267,12 @@ export default function About() {
 
           <div className="mb-12 p-6 rounded-lg border border-[#1F1F1F] bg-[#111111]">
             <p className="text-[#A1A1A1] leading-relaxed">
-              Worked with startups, personal brands, and small businesses to design and deliver modern, high-performance
-              web solutions. Consistently focused on product quality, user experience, and measurable business outcomes.
+             From architecting full-scale apps from scratch to rescuing legacy codebases with modern Next.js migrations. I squash nasty bugs, refactor messy architecture, and ship high-performance features.
             </p>
           </div>
 
           {/* Highlights Grid */}
-          <div className="space-y-6 mb-12">
+          {/* <div className="space-y-6 mb-12">
             <h3 className="text-sm font-semibold uppercase tracking-wide text-[#B6F2C1] mb-8">Key Achievements</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {freelanceHighlights.map((highlight, index) => (
@@ -296,10 +289,10 @@ export default function About() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Capabilities Summary */}
-          <div className="p-8 rounded-lg border border-[#B6F2C1]/20 bg-[#B6F2C1]/5">
+          {/* <div className="p-8 rounded-lg border border-[#B6F2C1]/20 bg-[#B6F2C1]/5">
             <div className="space-y-4">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-[#B6F2C1]">Core Capabilities</h3>
               <p className="text-[#A1A1A1] leading-relaxed">
@@ -308,7 +301,7 @@ export default function About() {
                 detail, scalability, and long-term maintainability.
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
 
 

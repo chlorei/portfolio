@@ -42,6 +42,15 @@ export default function Projects() {
       demo: "https://d1lemma.example.com",
       image: "/dilemma.png",
     },
+    {
+      title: "PulseNode",
+      description:
+        "PulseNode is a proactive business monitoring tool, currently in active development, that combines uptime checks, SSL alerts, and AI-driven reports to keep your services running smoothly.",
+      tech: ["Next.js", "Nest.js", "Redis", "BullMQ", "TypeScript"],
+      github: "https://github.com",
+      demo: "https://pulsenode.example.com",
+      image: "/pulsenode.jpg",
+    },
   ]
 
   return (
@@ -106,13 +115,13 @@ export default function Projects() {
                         </Button>
                       </Link>
                     )}
-                    {project.demo && (
+                    {/* {project.demo && (
                       <Link href={project.demo}>
                         <Button className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90">
                           Live Demo
                         </Button>
                       </Link>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>
