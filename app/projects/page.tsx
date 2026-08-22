@@ -45,12 +45,22 @@ export default function Projects() {
     {
       title: "PulseNode",
       description:
-        "PulseNode is a proactive business monitoring tool, currently in active development, that combines uptime checks, SSL alerts, and AI-driven reports to keep your services running smoothly.",
+        "PulseNode is a proactive business monitoring tool, currently in active development, that combines uptime checks, SSL alerts, and AI-driven reports to keep your services running smoothly. WIP",
       tech: ["Next.js", "Nest.js", "Redis", "BullMQ", "TypeScript"],
       github: "https://github.com",
       demo: "https://pulsenode.example.com",
       image: "/pulsenode.jpg",
     },
+    {
+      title: "Sound Designer Portfolio",
+      description:
+        "Multilingual (EN/RU/ZH/JA) portfolio site with a custom audio player built on the raw HTML5 <audio> API, per-language font switching. WIP",
+      tech: ["Next.js", "TypeScript", "Tailwind CSS", "i18n"],
+      github: "https://github.com",
+      demo: "https://pulsenode.example.com",
+      image: "/suo.png",
+    },
+
   ]
 
   return (
@@ -105,7 +115,7 @@ export default function Projects() {
 
                   {/* Buttons */}
                   <div className="flex flex-col sm:flex-row gap-3 pt-6">
-                    {project.github && (
+                    {/* {project.github && (
                       <Link href={project.github}>
                         <Button
                           variant="outline"
@@ -114,7 +124,7 @@ export default function Projects() {
                           GitHub
                         </Button>
                       </Link>
-                    )}
+                    )} */}
                     {/* {project.demo && (
                       <Link href={project.demo}>
                         <Button className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90">
