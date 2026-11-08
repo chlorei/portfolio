@@ -1,14 +1,16 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import Link from "next/link"
 import { Download } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Reveal from "@/components/reveal"
 import { site } from "@/lib/site"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
   description: "Background, skills, experience and education of Aleksandr Alekseev.",
-}
+  path: "/about",
+})
 
 const timeline = [
   {

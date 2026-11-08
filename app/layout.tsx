@@ -9,8 +9,7 @@ import { site } from "@/lib/site"
 
 const schibsted = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-schibsted" })
 
-const description =
-  "Computer Science student at TUHH and full-stack developer in Hamburg. Looking for a Werkstudent position. German C1, English C1."
+const description = site.description
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -20,13 +19,17 @@ export const metadata: Metadata = {
   },
   description,
   authors: [{ name: site.name }],
+  creator: site.name,
+  keywords: ["Aleksandr Alekseev", "Werkstudent", "Hamburg", "Full-Stack Developer", "TUHH", "Next.js", "FastAPI"],
   openGraph: {
     type: "website",
     siteName: site.name,
+    locale: "en_US",
     title: `${site.name} | Full-Stack Developer`,
     description,
     images: ["/og.png"],
   },
+  twitter: { card: "summary_large_image" },
 }
 
 export default function RootLayout({

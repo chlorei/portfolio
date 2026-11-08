@@ -1,12 +1,14 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import ContactForm from "@/components/contact-form"
 import Reveal from "@/components/reveal"
 import { site } from "@/lib/site"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
   description: "Get in touch with Aleksandr Alekseev about Werkstudent roles or projects.",
-}
+  path: "/contact",
+})
 
 const channels = [
   { label: "Email", value: site.email, href: `mailto:${site.email}`, external: false },

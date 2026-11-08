@@ -1,12 +1,14 @@
 import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
 import ProjectCard from "@/components/project-card"
 import Reveal from "@/components/reveal"
 import { projects } from "@/lib/projects"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Projects",
   description: "Products and client work: inCamp, Relinxr, Pokerocheck and more.",
-}
+  path: "/projects",
+})
 
 export default function Projects() {
   return (

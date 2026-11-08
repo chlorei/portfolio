@@ -1,9 +1,31 @@
+import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight, Briefcase, Download, GraduationCap, Languages, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Reveal from "@/components/reveal"
 import { site } from "@/lib/site"
+import { pageMetadata } from "@/lib/metadata"
+
+const description = site.description
+
+export const metadata: Metadata = pageMetadata({ description, path: "/" })
+
+// Structured data so search engines know this site is about a person
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  url: site.url,
+  image: `${site.url}/myPhoto.webp`,
+  email: `mailto:${site.email}`,
+  jobTitle: "Full-Stack Developer",
+  description,
+  address: { "@type": "PostalAddress", addressLocality: "Hamburg", addressCountry: "DE" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "Technische Universität Hamburg (TUHH)" },
+  knowsLanguage: ["de", "en", "ru"],
+  sameAs: [site.github, site.linkedin],
+}
 
 const facts = [
   { icon: GraduationCap, term: "Studying", detail: "B.Sc. Computer Science, TUHH" },
@@ -21,6 +43,10 @@ const stack = [
 export default function Home() {
   return (
     <main className="mx-auto max-w-5xl px-4 sm:px-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
+      />
       <section className="grid items-center gap-10 py-14 sm:py-20 md:grid-cols-[1fr_auto] md:gap-14 lg:py-24">
         <div className="order-2 md:order-1">
           <Reveal>
