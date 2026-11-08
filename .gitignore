@@ -22,3 +22,7 @@ build/
 .env
 .env.local
 .env.*.local
+# Claude Code
+CLAUDE.md
+.playwright-mcp/
+*.tsbuildinfo
