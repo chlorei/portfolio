@@ -1,4 +1,4 @@
-export type ProjectStatus = "Live" | "Client work" | "In progress"
+export type ProjectStatus = "Live" | "Client work" | "In progress" | "University"
 
 export interface Project {
   slug: string
@@ -7,6 +7,8 @@ export interface Project {
   status: ProjectStatus
   role: string
   image?: string
+  // Extra screenshots shown under the main image on the detail page
+  gallery?: { src: string; alt: string }[]
   // Short list shown on the project card; defaults to the first stack items
   tags?: string[]
   points: string[]
@@ -22,6 +24,12 @@ export const projects: Project[] = [
     status: "Live",
     role: "Full-stack: backend, frontend and deployment",
     image: "/incamp.webp",
+    gallery: [
+      { src: "/incamp/onboarding.webp", alt: "Onboarding: profile, skills and working style used for matching" },
+      { src: "/incamp/profile.webp", alt: "Public profile with projects, skills and open bounties" },
+      { src: "/incamp/project-dark.webp", alt: "Project page in dark theme" },
+      { src: "/incamp/post-bounty.webp", alt: "Posting a bounty: a small paid task" },
+    ],
     tags: ["FastAPI", "PostgreSQL", "Redis", "Next.js", "Docker"],
     points: [
       "Async FastAPI backend on PostgreSQL. People and projects are matched with semantic search over pgvector embeddings.",
@@ -38,14 +46,49 @@ export const projects: Project[] = [
     links: [{ label: "incamp.online", href: "https://incamp.online" }],
   },
   {
+    slug: "raytracer",
+    title: "CSG ray tracer",
+    summary: "A C++17 ray tracer that renders JSON scenes built with constructive solid geometry. University team project, graded 20/20 with maximum bonus points.",
+    status: "University",
+    role: "Team of three, TU Hamburg, Object Oriented Programming course",
+    image: "/raytracer.webp",
+    gallery: [
+      { src: "/raytracer/mirror.webp", alt: "Framed mirror with second-order reflections" },
+      { src: "/raytracer/puddle.webp", alt: "Glass tori, metal and a puddle with an uneven edge" },
+      { src: "/raytracer/glass.webp", alt: "Glass of different thickness refracting a striped floor" },
+      { src: "/raytracer/neon.webp", alt: "Neon tunnel animation built from CSG frames" },
+    ],
+    tags: ["C++17", "CMake", "Eigen", "Docker", "pybind11"],
+    points: [
+      "Everything is a Solid with two methods, intersect(ray) and contains(point). Primitives, boolean operations and transforms all implement it (Composite pattern), so CSG nests without limit and a new primitive only needs those two methods.",
+      "Spheres, half-spaces and tori, including a custom quartic solver for the torus. Union, intersection, difference, exclusion and negation reduce to an algebra of sorted ray intervals.",
+      "Recursive shading: reflection, refraction by Snell’s law with total internal reflection, shadows, Phong lighting, jittered anti-aliasing. Multithreaded rendering cut the showcase scene from 5.3 s to 1.1 s on 12 cores.",
+      "Unit tests for every module check properties rather than magic numbers, e.g. a glass sphere must flip the background upside down. Every JSON scene runs as a regression test in CTest, with AddressSanitizer and UBSan builds.",
+      "Multi-stage Docker build pinned by digest that runs the tests with GCC and -Werror during the build, about 360 MB final image running as a non-root user.",
+      "Python bindings via pybind11 and ffmpeg scripts for animations, Doxygen API docs and UML class diagrams.",
+    ],
+    stack: [
+      { layer: "Core", items: ["C++17", "Eigen", "nlohmann/json", "std::thread"] },
+      { layer: "Build and tests", items: ["CMake", "doctest", "CTest", "AddressSanitizer", "UBSan"] },
+      { layer: "Tooling", items: ["Docker", "pybind11", "Python", "ffmpeg", "Doxygen"] },
+    ],
+    links: [],
+  },
+  {
     slug: "relinxr",
     title: "Relinxr",
     summary: "A link analytics SaaS: short links with click tracking and a dashboard of who clicked, where and when.",
     status: "Live",
     role: "Solo product: design and full-stack development",
     image: "/relinxr.webp",
+    gallery: [
+      { src: "/relinxr/overview.webp", alt: "Overview: totals, clicks over the last 7 days and top countries" },
+      { src: "/relinxr/project.webp", alt: "A project: its links, their clicks and settings in one place" },
+    ],
     points: [
-      "Link shortening with click tracking, aggregated into dashboard charts.",
+      "Link shortening with click tracking, aggregated into dashboard charts of daily clicks and the countries they come from.",
+      "Projects group links by campaign, client or release and show their clicks together. Links made without an account move into it on sign-up.",
+      "Light and dark themes.",
       "JWT-based authentication and per-user data in MongoDB.",
       "Full UI built from scratch with shadcn/ui components and Recharts.",
     ],

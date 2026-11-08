@@ -75,6 +75,34 @@ export default async function ProjectPage({ params }: Props) {
         </Reveal>
       )}
 
+      {project.gallery && project.gallery.length > 0 && (
+        <Reveal className="mt-4">
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {project.gallery.map((shot) => (
+              <li key={shot.src}>
+                <a
+                  href={shot.src}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block overflow-hidden rounded-xl border border-border bg-muted transition-colors hover:border-foreground/20"
+                >
+                  <div className="relative aspect-[16/10]">
+                    <Image
+                      src={shot.src}
+                      alt={shot.alt}
+                      fill
+                      sizes="(min-width: 768px) 352px, 100vw"
+                      className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+                    />
+                  </div>
+                </a>
+                <p className="mt-2 text-sm text-muted-foreground">{shot.alt}</p>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      )}
+
       <Reveal className="mt-14">
         <h2 className="text-xl font-semibold tracking-tight">What I built</h2>
         <ul className="mt-5 space-y-3">
