@@ -19,12 +19,13 @@ const timeline = [
   },
   {
     period: "2023 – present",
-    title: "Frontend developer, freelance",
+    title: "Full-stack developer, freelance",
     place: "Remote",
     points: [
-      "Migrated pokerocheck.ru from a client-rendered React SPA to server-rendered Next.js, making pages indexable by search engines.",
-      "Rebuilt UI components, routing and state management during the migration.",
-      "Building a multilingual portfolio site with a custom audio player for a sound designer.",
+      "Build web apps for clients end to end, from first requirements to deployment, mostly in React, Next.js and TypeScript.",
+      "Move existing React apps to Next.js with server-side rendering, rewriting components, routing and Redux state along the way, so pages load faster and get indexed by search engines.",
+      "Improve performance and accessibility, checked with Lighthouse and Core Web Vitals.",
+      "Work with clients directly: turn their requests into concrete tasks, agree on scope and deliver on time.",
     ],
   },
   {
@@ -60,11 +61,17 @@ export default function About() {
             2023, first as a freelance frontend developer and now across the whole stack.
           </p>
           <p>
+            I build web apps end to end: interfaces in React and Next.js, APIs in FastAPI or Node.js, data in
+            PostgreSQL, MongoDB and Redis, and deployment with Docker. I care about pages that load fast, work for
+            everyone and stay easy to change.
+          </p>
+          <p>
             My latest product is{" "}
             <Link href="/projects/incamp" className="font-medium text-foreground underline underline-offset-4">
               inCamp
             </Link>
-            . I’m looking for a Werkstudent position where I can work on a real product alongside my studies.
+            . I’m looking for a Werkstudent position, up to 20 hours a week, where I can work on a real product
+            alongside my studies.
           </p>
         </div>
         <Button asChild variant="outline" className="mt-6">

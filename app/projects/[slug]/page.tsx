@@ -1,9 +1,9 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import ProjectGallery from "@/components/project-gallery"
 import Reveal from "@/components/reveal"
 import StatusBadge from "@/components/status-badge"
 import { projects } from "@/lib/projects"
@@ -60,48 +60,10 @@ export default async function ProjectPage({ params }: Props) {
         )}
       </Reveal>
 
-      {project.image && (
-        <Reveal delay={100} className="mt-10">
-          <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-border bg-muted">
-            <Image
-              src={project.image}
-              alt={`Screenshot of ${project.title}`}
-              fill
-              priority
-              sizes="(min-width: 768px) 720px, 100vw"
-              className="object-cover object-top"
-            />
-          </div>
-        </Reveal>
-      )}
-
-      {project.gallery && project.gallery.length > 0 && (
-        <Reveal className="mt-4">
-          <ul className="grid gap-4 sm:grid-cols-2">
-            {project.gallery.map((shot) => (
-              <li key={shot.src}>
-                <a
-                  href={shot.src}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block overflow-hidden rounded-xl border border-border bg-muted transition-colors hover:border-foreground/20"
-                >
-                  <div className="relative aspect-[16/10]">
-                    <Image
-                      src={shot.src}
-                      alt={shot.alt}
-                      fill
-                      sizes="(min-width: 768px) 352px, 100vw"
-                      className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
-                    />
-                  </div>
-                </a>
-                <p className="mt-2 text-sm text-muted-foreground">{shot.alt}</p>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-      )}
+      <ProjectGallery
+        cover={project.image ? { src: project.image, alt: `Screenshot of ${project.title}` } : undefined}
+        shots={project.gallery ?? []}
+      />
 
       <Reveal className="mt-14">
         <h2 className="text-xl font-semibold tracking-tight">What I built</h2>
