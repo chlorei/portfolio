@@ -1,32 +1,69 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
+import { isLocale, type Locale } from "@/lib/i18n"
 
-const contactSchema = z.object({
-  name: z.string().trim().min(1, "Enter your name.").max(100, "Name is too long (max 100 characters)."),
-  email: z.string().trim().email("Enter a valid email address.").max(200, "Email is too long."),
-  message: z.string().trim().min(1, "Enter a message.").max(3000, "Message is too long (max 3000 characters)."),
-  // Honeypot field: real users never fill it in
-  website: z.string().optional(),
-})
+// 4xx messages are shown to the visitor in the form, so they are written for people
+const messages = {
+  en: {
+    name: "Enter your name.",
+    nameLong: "Name is too long (max 100 characters).",
+    email: "Enter a valid email address.",
+    emailLong: "Email is too long.",
+    message: "Enter a message.",
+    messageLong: "Message is too long (max 3000 characters).",
+    invalid: "Invalid request.",
+    unavailable: "Contact form is temporarily unavailable.",
+    notSent: "Message not sent.",
+    tooMany: "Too many messages right now. Wait a minute.",
+  },
+  de: {
+    name: "Bitte geben Sie Ihren Namen ein.",
+    nameLong: "Der Name ist zu lang (max. 100 Zeichen).",
+    email: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    emailLong: "Die E-Mail-Adresse ist zu lang.",
+    message: "Bitte geben Sie eine Nachricht ein.",
+    messageLong: "Die Nachricht ist zu lang (max. 3000 Zeichen).",
+    invalid: "Ungültige Anfrage.",
+    unavailable: "Das Kontaktformular ist vorübergehend nicht verfügbar.",
+    notSent: "Nachricht nicht gesendet.",
+    tooMany: "Gerade zu viele Nachrichten. Bitte warten Sie eine Minute.",
+  },
+} satisfies Record<Locale, Record<string, string>>
+
+function contactSchema(m: (typeof messages)[Locale]) {
+  return z.object({
+    name: z.string().trim().min(1, m.name).max(100, m.nameLong),
+    email: z.string().trim().email(m.email).max(200, m.emailLong),
+    message: z.string().trim().min(1, m.message).max(3000, m.messageLong),
+    // Honeypot field: real users never fill it in
+    website: z.string().optional(),
+  })
+}
+
+function requestLocale(body: unknown): Locale {
+  const lang = typeof body === "object" && body !== null ? (body as { lang?: unknown }).lang : undefined
+  return typeof lang === "string" && isLocale(lang) ? lang : "en"
+}
 
 export async function POST(req: Request) {
-  const token = process.env.TELEGRAM_BOT_TOKEN
-  const chatId = process.env.TELEGRAM_CHAT_ID
-  if (!token || !chatId) {
-    console.error("[contact] TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is not configured")
-    return NextResponse.json({ error: "Contact form is temporarily unavailable." }, { status: 503 })
-  }
-
   let body: unknown
   try {
     body = await req.json()
   } catch {
-    return NextResponse.json({ error: "Invalid request body." }, { status: 400 })
+    return NextResponse.json({ error: messages.en.invalid }, { status: 400 })
+  }
+  const m = messages[requestLocale(body)]
+
+  const token = process.env.TELEGRAM_BOT_TOKEN
+  const chatId = process.env.TELEGRAM_CHAT_ID
+  if (!token || !chatId) {
+    console.error("[contact] TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID is not configured")
+    return NextResponse.json({ error: m.unavailable }, { status: 503 })
   }
 
-  const parsed = contactSchema.safeParse(body)
+  const parsed = contactSchema(m).safeParse(body)
   if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid input." }, { status: 400 })
+    return NextResponse.json({ error: parsed.error.issues[0]?.message ?? m.invalid }, { status: 400 })
   }
 
   const { name, email, message, website } = parsed.data
@@ -49,16 +86,16 @@ export async function POST(req: Request) {
     })
   } catch (e) {
     console.error("[contact] Telegram request failed", e)
-    return NextResponse.json({ error: "Message not sent." }, { status: 502 })
+    return NextResponse.json({ error: m.notSent }, { status: 502 })
   }
 
   if (!res.ok) {
     const detail = await res.text().catch(() => "<unreadable>")
     console.error("[contact] Telegram sendMessage failed", res.status, detail)
     if (res.status === 429) {
-      return NextResponse.json({ error: "Too many messages right now. Wait a minute." }, { status: 429 })
+      return NextResponse.json({ error: m.tooMany }, { status: 429 })
     }
-    return NextResponse.json({ error: "Message not sent." }, { status: 502 })
+    return NextResponse.json({ error: m.notSent }, { status: 502 })
   }
 
   return NextResponse.json({ ok: true })

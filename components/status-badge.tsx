@@ -1,7 +1,7 @@
 import type { ProjectStatus } from "@/lib/projects"
 import { cn } from "@/lib/utils"
 
-export default function StatusBadge({ status }: { status: ProjectStatus }) {
+export default function StatusBadge({ status, label }: { status: ProjectStatus; label: string }) {
   return (
     <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground">
       <span
@@ -11,7 +11,7 @@ export default function StatusBadge({ status }: { status: ProjectStatus }) {
           status === "Live" ? "bg-signal" : status === "In progress" ? "bg-amber-500" : "bg-muted-foreground",
         )}
       />
-      {status}
+      {label}
     </span>
   )
 }

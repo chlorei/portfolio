@@ -7,13 +7,14 @@ import Reveal from "@/components/reveal"
 import { cn } from "@/lib/utils"
 
 type Shot = { src: string; alt: string }
+type Labels = { open: string; viewer: string; close: string; previous: string; next: string }
 
 /**
  * The main screenshot plus the extra ones in a grid. Clicking any of them opens
  * a full-screen viewer (native <dialog>: Esc closes it, focus stays inside) with
  * arrow keys, buttons and swipe to move between shots.
  */
-export default function ProjectGallery({ cover, shots }: { cover?: Shot; shots: Shot[] }) {
+export default function ProjectGallery({ cover, shots, labels }: { cover?: Shot; shots: Shot[]; labels: Labels }) {
   const all = cover ? [cover, ...shots] : shots
   const dialogRef = useRef<HTMLDialogElement>(null)
   const touchX = useRef<number | null>(null)
@@ -54,7 +55,7 @@ export default function ProjectGallery({ cover, shots }: { cover?: Shot; shots: 
           <button
             type="button"
             onClick={() => open(0)}
-            aria-label={`Open screenshot: ${cover.alt}`}
+            aria-label={labels.open + cover.alt}
             className="group relative block aspect-[16/10] w-full cursor-zoom-in overflow-hidden rounded-xl border border-border bg-muted"
           >
             <Image
@@ -77,7 +78,7 @@ export default function ProjectGallery({ cover, shots }: { cover?: Shot; shots: 
                 <button
                   type="button"
                   onClick={() => open(cover ? i + 1 : i)}
-                  aria-label={`Open screenshot: ${shot.alt}`}
+                  aria-label={labels.open + shot.alt}
                   className="group relative block aspect-[16/10] w-full cursor-zoom-in overflow-hidden rounded-xl border border-border bg-muted transition-colors hover:border-foreground/20"
                 >
                   <Image
@@ -98,7 +99,7 @@ export default function ProjectGallery({ cover, shots }: { cover?: Shot; shots: 
       <dialog
         ref={dialogRef}
         onClose={() => setIndex(null)}
-        aria-label="Screenshot viewer"
+        aria-label={labels.viewer}
         className={cn(
           "fixed inset-0 m-0 h-dvh max-h-none w-screen max-w-none bg-transparent p-0 text-foreground backdrop:bg-transparent",
           "opacity-0 transition-opacity duration-200 open:opacity-100 starting:open:opacity-0",
@@ -125,7 +126,7 @@ export default function ProjectGallery({ cover, shots }: { cover?: Shot; shots: 
             <button
               type="button"
               onClick={close}
-              aria-label="Close"
+              aria-label={labels.close}
               className="rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               <X className="size-5" />
@@ -151,7 +152,7 @@ export default function ProjectGallery({ cover, shots }: { cover?: Shot; shots: 
                 <button
                   type="button"
                   onClick={() => step(-1)}
-                  aria-label="Previous screenshot"
+                  aria-label={labels.previous}
                   className="absolute top-1/2 left-3 hidden -translate-y-1/2 rounded-full border border-border bg-card p-2.5 shadow-sm transition-colors hover:border-foreground/20 sm:block"
                 >
                   <ChevronLeft className="size-5" />
@@ -159,7 +160,7 @@ export default function ProjectGallery({ cover, shots }: { cover?: Shot; shots: 
                 <button
                   type="button"
                   onClick={() => step(1)}
-                  aria-label="Next screenshot"
+                  aria-label={labels.next}
                   className="absolute top-1/2 right-3 hidden -translate-y-1/2 rounded-full border border-border bg-card p-2.5 shadow-sm transition-colors hover:border-foreground/20 sm:block"
                 >
                   <ChevronRight className="size-5" />
@@ -168,9 +169,7 @@ export default function ProjectGallery({ cover, shots }: { cover?: Shot; shots: 
             )}
           </div>
 
-          <p className="px-4 py-4 text-center text-sm text-muted-foreground sm:px-6">
-            {current?.alt}
-          </p>
+          <p className="px-4 py-4 text-center text-sm text-muted-foreground sm:px-6">{current?.alt}</p>
         </div>
       </dialog>
     </>

@@ -1,51 +1,62 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowRight, Briefcase, Download, GraduationCap, Languages, MapPin } from "lucide-react"
+import { ArrowRight, Briefcase, GraduationCap, Languages, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { CvButton, OtherCvLink } from "@/components/cv-links"
 import Reveal from "@/components/reveal"
+import { getDictionary } from "@/lib/dictionary"
+import { isLocale, localePath, type Locale } from "@/lib/i18n"
 import { site } from "@/lib/site"
 import { pageMetadata } from "@/lib/metadata"
 
-const description = site.description
-
-export const metadata: Metadata = pageMetadata({ description, path: "/" })
-
-// Structured data so search engines know this site is about a person
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: site.name,
-  url: site.url,
-  image: `${site.url}/myPhoto.webp`,
-  email: `mailto:${site.email}`,
-  jobTitle: "Full-Stack Developer",
-  description,
-  address: { "@type": "PostalAddress", addressLocality: "Hamburg", addressCountry: "DE" },
-  alumniOf: { "@type": "CollegeOrUniversity", name: "Technische Universität Hamburg (TUHH)" },
-  knowsLanguage: ["de", "en", "ru"],
-  sameAs: [site.github, site.linkedin],
+export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
+  const { lang } = await params
+  if (!isLocale(lang)) return {}
+  return pageMetadata({ lang, description: getDictionary(lang).meta.description, path: "/" })
 }
 
-const facts = [
-  { icon: GraduationCap, term: "Studying", detail: "B.Sc. Computer Science, TUHH" },
-  { icon: Languages, term: "Languages", detail: "German C1, English C1" },
-  { icon: Briefcase, term: "Experience", detail: "Freelance since 2023" },
-  { icon: MapPin, term: "Based in", detail: "Hamburg, Germany" },
-]
+// Structured data so search engines know this site is about a person
+function personJsonLd(lang: Locale) {
+  const t = getDictionary(lang)
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: site.name,
+    url: `${site.url}${localePath(lang, "/")}`,
+    image: `${site.url}/myPhoto.webp`,
+    email: `mailto:${site.email}`,
+    jobTitle: t.meta.role,
+    description: t.meta.description,
+    address: { "@type": "PostalAddress", addressLocality: "Hamburg", addressCountry: "DE" },
+    alumniOf: { "@type": "CollegeOrUniversity", name: "Technische Universität Hamburg (TUHH)" },
+    knowsLanguage: ["de", "en", "ru"],
+    sameAs: [site.github, site.linkedin],
+  }
+}
 
 const stack = [
-  { area: "Frontend", items: ["TypeScript", "React", "Next.js", "Tailwind CSS", "Zustand"] },
-  { area: "Backend", items: ["Python", "FastAPI", "Node.js", "NestJS", "REST APIs", "WebSockets"] },
-  { area: "Data & infrastructure", items: ["PostgreSQL", "Redis", "MongoDB", "Docker", "Caddy", "Git"] },
-]
+  { area: "frontend", items: ["TypeScript", "React", "Next.js", "Tailwind CSS", "Zustand"] },
+  { area: "backend", items: ["Python", "FastAPI", "Node.js", "NestJS", "REST APIs", "WebSockets"] },
+  { area: "data", items: ["PostgreSQL", "Redis", "MongoDB", "Docker", "Caddy", "Git"] },
+] as const
 
-export default function Home() {
+export default async function Home({ params }: PageProps<"/[lang]">) {
+  const { lang: param } = await params
+  const lang = param as Locale
+  const t = getDictionary(lang)
+  const facts = [
+    { icon: GraduationCap, ...t.home.facts.studying },
+    { icon: Languages, ...t.home.facts.languages },
+    { icon: Briefcase, ...t.home.facts.experience },
+    { icon: MapPin, ...t.home.facts.location },
+  ]
+
   return (
     <main className="mx-auto max-w-5xl px-4 sm:px-6">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(lang)).replace(/</g, "\\u003c") }}
       />
       <section className="grid items-center gap-10 py-14 sm:py-20 md:grid-cols-[1fr_auto] md:gap-14 lg:py-24">
         <div className="order-2 md:order-1">
@@ -55,41 +66,36 @@ export default function Home() {
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-signal opacity-60 motion-reduce:hidden" />
                 <span className="relative inline-flex size-2 rounded-full bg-signal" />
               </span>
-              Open to Werkstudent roles
+              {t.home.available}
             </p>
           </Reveal>
           <Reveal delay={80}>
             <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">Aleksandr Alekseev</h1>
-            <p className="mt-3 text-xl text-muted-foreground sm:text-2xl">Full-stack developer</p>
+            <p className="mt-3 text-xl text-muted-foreground sm:text-2xl">{t.home.role}</p>
           </Reveal>
           <Reveal delay={160}>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
-              Computer Science student at TUHH. I build web apps end to end, from the database and API to the
-              interface.
-            </p>
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">{t.home.intro}</p>
           </Reveal>
           <Reveal delay={240}>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" className="group">
-                <Link href="/projects">
-                  View projects
+                <Link href={localePath(lang, "/projects")}>
+                  {t.home.viewProjects}
                   <ArrowRight aria-hidden className="transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
-                <a href={site.cv} download={site.cvFileName}>
-                  <Download aria-hidden />
-                  Download CV
-                </a>
-              </Button>
+              <CvButton lang={lang} size="lg" />
             </div>
+            <p className="mt-4">
+              <OtherCvLink lang={lang} />
+            </p>
           </Reveal>
         </div>
         <Reveal delay={120} className="order-1 md:order-2">
           <div className="w-36 overflow-hidden rounded-2xl border border-border bg-muted sm:w-44 md:w-64">
             <Image
               src="/myPhoto.webp"
-              alt="Portrait of Aleksandr Alekseev"
+              alt={t.home.portraitAlt}
               width={600}
               height={800}
               priority
@@ -100,7 +106,7 @@ export default function Home() {
         </Reveal>
       </section>
 
-      <section aria-label="Quick facts" className="pb-16">
+      <section aria-label={t.home.factsLabel} className="pb-16">
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {facts.map((fact, i) => (
             <li key={fact.term}>
@@ -121,13 +127,13 @@ export default function Home() {
       <section aria-labelledby="stack-heading" className="pb-24">
         <Reveal>
           <h2 id="stack-heading" className="text-2xl font-semibold tracking-tight">
-            What I work with
+            {t.home.stackHeading}
           </h2>
         </Reveal>
         <div className="mt-8 grid gap-8 md:grid-cols-3">
           {stack.map((group, i) => (
             <Reveal key={group.area} delay={i * 100}>
-              <h3 className="text-sm text-muted-foreground">{group.area}</h3>
+              <h3 className="text-sm text-muted-foreground">{t.home.stackAreas[group.area]}</h3>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {group.items.map((item) => (
                   <li

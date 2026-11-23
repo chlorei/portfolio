@@ -3,6 +3,8 @@
 import type React from "react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import type { Dictionary } from "@/lib/dictionary"
+import type { Locale } from "@/lib/i18n"
 import { site } from "@/lib/site"
 
 const fieldClass =
@@ -10,7 +12,7 @@ const fieldClass =
 
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind: "error"; message: string }
 
-export default function ContactForm() {
+export default function ContactForm({ lang, labels }: { lang: Locale; labels: Dictionary["contact"]["form"] }) {
   const [formData, setFormData] = useState({ name: "", email: "", message: "", website: "" })
   const [status, setStatus] = useState<Status>({ kind: "idle" })
 
@@ -28,19 +30,19 @@ export default function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, lang }),
       })
 
       if (!res.ok) {
         const data = await res.json().catch(() => null)
         const serverMessage = typeof data?.error === "string" ? data.error : null
-        throw new Error(res.status < 500 && serverMessage ? serverMessage : "Message not sent.")
+        throw new Error(res.status < 500 && serverMessage ? serverMessage : labels.failed)
       }
 
       setFormData({ name: "", email: "", message: "", website: "" })
       setStatus({ kind: "sent" })
     } catch (err) {
-      const message = err instanceof Error && err.message !== "Failed to fetch" ? err.message : "Message not sent."
+      const message = err instanceof Error && err.message !== "Failed to fetch" ? err.message : labels.failed
       setStatus({ kind: "error", message })
     }
   }
@@ -52,7 +54,7 @@ export default function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-2">
           <label htmlFor="name" className="text-sm font-medium">
-            Name
+            {labels.name}
           </label>
           <input
             id="name"
@@ -68,7 +70,7 @@ export default function ContactForm() {
         </div>
         <div className="space-y-2">
           <label htmlFor="email" className="text-sm font-medium">
-            Email
+            {labels.email}
           </label>
           <input
             id="email"
@@ -87,12 +89,20 @@ export default function ContactForm() {
       {/* Honeypot: hidden from people, filled in by bots */}
       <div className="hidden" aria-hidden>
         <label htmlFor="website">Website</label>
-        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" value={formData.website} onChange={handleChange} />
+        <input
+          id="website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={formData.website}
+          onChange={handleChange}
+        />
       </div>
 
       <div className="space-y-2">
         <label htmlFor="message" className="text-sm font-medium">
-          Message
+          {labels.message}
         </label>
         <textarea
           id="message"
@@ -108,13 +118,13 @@ export default function ContactForm() {
 
       <div className="flex flex-wrap items-center gap-4">
         <Button type="submit" size="lg" disabled={sending}>
-          {sending ? "Sending…" : "Send message"}
+          {sending ? labels.sending : labels.send}
         </Button>
         <p aria-live="polite" className="text-sm">
-          {status.kind === "sent" && <span className="text-muted-foreground">Message sent. I’ll reply by email.</span>}
+          {status.kind === "sent" && <span className="text-muted-foreground">{labels.sent}</span>}
           {status.kind === "error" && (
             <span role="alert" className="text-destructive">
-              {status.message} Try again or email{" "}
+              {status.message} {labels.retry}{" "}
               <a href={`mailto:${site.email}`} className="underline underline-offset-4">
                 {site.email}
               </a>
