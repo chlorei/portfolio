@@ -17,9 +17,12 @@ export function localePath(lang: Locale, path: string) {
   return path === "/" ? `/${lang}` : `/${lang}${path}`
 }
 
-/** The locale-free path of a public URL: "/de/projects" -> "/projects" */
+/**
+ * The locale-free path: "/de/projects" -> "/projects". English pages report their
+ * internal "/en/..." path (proxy.ts rewrites to it), so both prefixes are stripped.
+ */
 export function stripLocale(pathname: string) {
-  const match = pathname.match(/^\/de(\/.*)?$/)
+  const match = pathname.match(/^\/(?:en|de)(\/.*)?$/)
   return match ? match[1] || "/" : pathname
 }
 

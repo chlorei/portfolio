@@ -25,7 +25,7 @@ const en = {
     factsLabel: "Quick facts",
     facts: {
       studying: { term: "Studying", detail: "B.Sc. Computer Science, TUHH" },
-      languages: { term: "Languages", detail: "German C1, English C1" },
+      languages: { term: "Languages", detail: "German C1, English C1, Russian native" },
       experience: { term: "Experience", detail: "Freelance since 2023" },
       location: { term: "Based in", detail: "Hamburg, Germany" },
     },
@@ -174,7 +174,7 @@ const de: Dictionary = {
     factsLabel: "Kurz und knapp",
     facts: {
       studying: { term: "Studium", detail: "B.Sc. Informatik, TUHH" },
-      languages: { term: "Sprachen", detail: "Deutsch C1, Englisch C1" },
+      languages: { term: "Sprachen", detail: "Deutsch C1, Englisch C1, Russisch Muttersprache" },
       experience: { term: "Erfahrung", detail: "Freiberuflich seit 2023" },
       location: { term: "Wohnort", detail: "Hamburg" },
     },

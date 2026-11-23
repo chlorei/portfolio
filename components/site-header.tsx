@@ -29,7 +29,8 @@ export default function SiteHeader({
           <nav aria-label={labels.main}>
             <ul className="flex items-center sm:gap-2">
               {items.map((item) => {
-                const active = pathname === item.href || pathname.startsWith(`${item.href}/`)
+                const itemPath = stripLocale(item.href)
+                const active = path === itemPath || path.startsWith(`${itemPath}/`)
                 return (
                   <li key={item.href}>
                     <Link
