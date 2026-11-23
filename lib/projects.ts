@@ -1,4 +1,4 @@
-export type ProjectStatus = "Live" | "Client work" | "In progress" | "University"
+export type ProjectStatus = "Live" | "Client work" | "In progress" | "University" | "Hackathon"
 
 export interface Project {
   slug: string
@@ -6,6 +6,8 @@ export interface Project {
   summary: string
   status: ProjectStatus
   role: string
+  // Prize or recognition, shown as a highlighted badge on the card and detail page
+  award?: string
   image?: string
   // Extra screenshots shown under the main image on the detail page
   gallery?: { src: string; alt: string }[]
@@ -73,6 +75,37 @@ export const projects: Project[] = [
       { layer: "Tooling", items: ["Docker", "pybind11", "Python", "ffmpeg", "Doxygen"] },
     ],
     links: [],
+  },
+  {
+    slug: "dreamkit",
+    title: "dreamkit",
+    summary:
+      "A plugin toolkit around Dream Labs’ Dream-1 robotics model: it shows why a robot arm’s attempt failed, recovers from it, tracks what it costs and collects data for fine-tuning. Built in two days at the Berlin Robotics & AI Hackathon.",
+    status: "Hackathon",
+    award: "Hackathon winner",
+    role: "Team of three, HackLab × BRISA hackathon at CIC Berlin, November 2026. I built the core plugin API, the server, the CLI and the web panel.",
+    image: "/dreamkit.webp",
+    gallery: [
+      { src: "/dreamkit/live-recovered.webp", alt: "Live view: a failed attempt recovered without resetting the scene" },
+      { src: "/dreamkit/history-run.webp", alt: "History of a 150-attempt run: cost, latency and what each plugin reported" },
+      { src: "/dreamkit/plugin-page.webp", alt: "A plugin’s own page with its settings and results" },
+      { src: "/dreamkit/budget-stop.webp", alt: "Budget guard sending the arms home before the API credits run out" },
+    ],
+    tags: ["Python", "FastAPI", "React", "MuJoCo", "LLM vision"],
+    points: [
+      "One line wraps Dream Labs’ client. Plugins then run around every model call and control step in three stages: detect, recover, learn.",
+      "A failure monitor names the cause and the second (“dropped the object at 8.8 s”). Recovery continues from where the arm is instead of resetting the scene, and a budget guard stops the run before the API credits run out.",
+      "Works in the MuJoCo simulator and on a real robot: with only joint states, gripper and camera feeds it detects what it can and marks the rest as unknown instead of guessing.",
+      "FastAPI server and React panel: a live view of the running loop, history with the video at the moment of failure, plugin management and dataset export for fine-tuning in LeRobot format.",
+      "A versioned plugin standard with manifests and replay fixtures; dreamkit check validates any plugin, and a pytest suite runs in CI.",
+      "Measured on 178 real Dream-1 attempts: 33% success (95% interval 24–45%) and $0.098 per successful attempt, with API outages counted separately from model failures.",
+    ],
+    stack: [
+      { layer: "Core", items: ["Python", "FastAPI", "MuJoCo", "pytest", "uv"] },
+      { layer: "Panel", items: ["React", "TypeScript", "Vite", "Tailwind CSS", "TanStack Query", "Recharts"] },
+      { layer: "AI and data", items: ["Dream-1 API", "Gemini / Claude vision", "LeRobot datasets"] },
+    ],
+    links: [{ label: "Source", href: "https://github.com/chlorei/hackathon26" }],
   },
   {
     slug: "relinxr",

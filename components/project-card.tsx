@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 import type { Project } from "@/lib/projects"
+import AwardBadge from "@/components/award-badge"
 import StatusBadge from "@/components/status-badge"
 import { cn } from "@/lib/utils"
 
@@ -48,7 +49,7 @@ export default function ProjectCard({
       <div className={cn("flex flex-1 flex-col gap-3 p-5 sm:p-6", featured && "lg:justify-center lg:p-8")}>
         <div className="flex items-start justify-between gap-3">
           <h2 className={cn("text-xl font-semibold tracking-tight", featured && "lg:text-2xl")}>{project.title}</h2>
-          <StatusBadge status={project.status} />
+          {project.award ? <AwardBadge award={project.award} /> : <StatusBadge status={project.status} />}
         </div>
         <p className="leading-relaxed text-muted-foreground">{project.summary}</p>
         <ul className={cn("flex flex-wrap gap-1.5 pt-2", !featured && "mt-auto")}>

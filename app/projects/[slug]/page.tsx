@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import ProjectGallery from "@/components/project-gallery"
 import Reveal from "@/components/reveal"
+import AwardBadge from "@/components/award-badge"
 import StatusBadge from "@/components/status-badge"
 import { projects } from "@/lib/projects"
 
@@ -45,7 +46,7 @@ export default async function ProjectPage({ params }: Props) {
       <Reveal className="mt-8">
         <div className="flex flex-wrap items-center gap-3">
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">{project.title}</h1>
-          <StatusBadge status={project.status} />
+          {project.award ? <AwardBadge award={project.award} /> : <StatusBadge status={project.status} />}
         </div>
         <p className="mt-4 text-lg leading-relaxed text-muted-foreground">{project.summary}</p>
         <p className="mt-2 text-sm text-muted-foreground">{project.role}</p>
@@ -54,7 +55,7 @@ export default async function ProjectPage({ params }: Props) {
             {project.links.map((link, i) => (
               <Button key={link.href} asChild variant={i === 0 ? "default" : "outline"}>
                 <a href={link.href} target="_blank" rel="noopener noreferrer">
-                  {i === 0 ? "Open site" : link.label}
+                  {i === 0 && link.label !== "Source" ? "Open site" : link.label}
                   <ArrowUpRight aria-hidden />
                 </a>
               </Button>

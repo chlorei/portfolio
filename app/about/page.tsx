@@ -14,6 +14,14 @@ export const metadata: Metadata = pageMetadata({
 
 const timeline = [
   {
+    period: "November 2026",
+    title: "Winner, Berlin Robotics & AI Hackathon",
+    place: "HackLab × BRISA, CIC Berlin",
+    points: [
+      "Built dreamkit in a team of three in two days: a plugin toolkit around Dream Labs’ Dream-1 robotics model that explains failed attempts, recovers from them and collects fine-tuning data.",
+    ],
+  },
+  {
     period: "2025 – 2028",
     title: "B.Sc. Computer Science",
     place: "TUHH, Technische Universität Hamburg",
